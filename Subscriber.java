@@ -15,9 +15,20 @@ public class Subscriber implements SubscriberInterface {
         System.out.println(name.toUpperCase() + " "+ this.message);
     }
 
+    private boolean containsMessageType(){
+        int[] messageType = publisher.getMessageType();
+        for (int i : messageType) {
+            if(i== this.messageType){
+                return true;
+            }
+        }
+        return false;
+    }
+
     @Override
     public void update() {
-        if (publisher.getMessageType() == this.messageType) {
+
+        if (containsMessageType()) {
             this.message = publisher.getMessage();
 
         } else

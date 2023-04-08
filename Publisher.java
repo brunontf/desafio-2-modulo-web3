@@ -1,14 +1,17 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
 public class Publisher implements PublisherInterface{
     private List<Subscriber> subsList;
     private String message;
-    private int messageType;
+    private int[] messageType;
 
     Publisher(){
         subsList= new ArrayList<>();
+        messageType= new int[MessageTypeEnum.getSize()];
+        Arrays.fill(messageType, -1);
     }
 
 
@@ -33,9 +36,12 @@ public class Publisher implements PublisherInterface{
     }
 
     @Override
-    public void toPublish(String message, int messageType) {
+    public void toPublish(String message, int... messageType) {
         this.message=message;
-        this.messageType=messageType;
+        for (int i = 0; i < messageType.length; i++) {
+            this.messageType[i]=messageType[i];
+        }
+        // this.messageType=messageType;
         notifySubscribers();
     }
 
@@ -49,7 +55,7 @@ public class Publisher implements PublisherInterface{
         return message;
     }
     
-    public int getMessageType() {
+    public int[] getMessageType() {
         return messageType;
     }
     
